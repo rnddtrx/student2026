@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "students")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Student {
 
     @Id

@@ -1,10 +1,7 @@
 package be.ipam.student.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -14,7 +11,7 @@ import java.util.UUID;
 @Table(name = "courses")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Course {
 
     @Id
@@ -30,5 +27,10 @@ public class Course {
     @Column(name = "name", nullable = false, unique = true)
     @JdbcTypeCode(SqlTypes.NVARCHAR)
     private String name;
+
+    @PrePersist
+    protected void onCreate() {
+        setPublicId(java.util.UUID.randomUUID());
+    }
 
 }
