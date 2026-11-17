@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,6 +28,9 @@ public class Course {
     @Column(name = "name", nullable = false, unique = true)
     @JdbcTypeCode(SqlTypes.NVARCHAR)
     private String name;
+
+    @OneToMany(mappedBy = "course")
+    private List<Enrolment> enrolments;
 
     @PrePersist
     protected void onCreate() {

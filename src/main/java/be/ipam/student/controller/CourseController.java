@@ -16,7 +16,7 @@ class CourseController {
         this.courseService = courseService;
     }
 
-    //GET /courses/{id}
+    //GET
     @GetMapping("/{id}")
     public ResponseEntity<CourseDto>getCourseById(@PathVariable UUID id) {
         CourseDto course = courseService.getCourseByPublicId(id);
@@ -28,10 +28,18 @@ class CourseController {
         }
     }
 
+    //POST
     @PostMapping
     public ResponseEntity<CourseDto> createCourse(@RequestBody CourseDto courseDto) {
         CourseDto createdCourse = courseService.addCourse(courseDto);
         return ResponseEntity.created(null).body(createdCourse);
+    }
+
+    //DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable UUID id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 
 

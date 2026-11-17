@@ -8,4 +8,6 @@ public interface CourseService {
     CourseDto getCourseByPublicId(UUID publicId);
 
     CourseDto addCourse(CourseDto courseDto);
+
+    void deleteCourse(UUID publicId);
 }

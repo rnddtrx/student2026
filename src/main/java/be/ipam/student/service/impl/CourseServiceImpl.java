@@ -1,6 +1,7 @@
 package be.ipam.student.service.impl;
 
 import be.ipam.student.dto.CourseDto;
+import be.ipam.student.exception.CourseNotFoundException;
 import be.ipam.student.mapper.CourseMapper;
 import be.ipam.student.model.Course;
 import be.ipam.student.repository.CourseRepository;
@@ -22,15 +23,22 @@ class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseDto getCourseByPublicId(UUID publicId){
+    public CourseDto getCourseByPublicId(UUID publicId) {
         Optional<Course> course = courseRepository.getCourseByPublicId(publicId);
         return course.map(courseMapper::toDto).orElse(null);
     }
 
     @Override
-    public CourseDto addCourse(CourseDto courseDto){
+    public CourseDto addCourse(CourseDto courseDto) {
         Course course = courseMapper.toEntity(courseDto);
         Course savedCourse = courseRepository.save(course);
         return courseMapper.toDto(savedCourse);
+    }
+
+    @Override
+    public void deleteCourse(UUID publicId) {
+        Course course = courseRepository.getCourseByPublicId(publicId)
+                .orElseThrow(() -> new CourseNotFoundException(publicId));
+        courseRepository.delete(course);
     }
 }

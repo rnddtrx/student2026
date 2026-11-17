@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "enrolments")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Enrolment {
 
     @Id
@@ -27,4 +27,16 @@ public class Enrolment {
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID publicId;
 
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private  Student student;
+
+    @PrePersist
+    protected void onCreate() {
+        setPublicId(java.util.UUID.randomUUID());
+    }
 }
